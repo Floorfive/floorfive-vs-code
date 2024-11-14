@@ -1,0 +1,343 @@
+:root {
+  --category-btn-background-color: var(--vscode-editor-background);
+  --category-btn-border-bottom-color: var(--vscode-textBlockQuote-background);
+  --category-btn-gradient-color: var(--vscode-button-background);
+  --command-btn-background-color: var(--vscode-editor-background);
+  --command-btn-hover-color: var(--vscode-button-background);
+  --command-btn-sub-hover-color: var(--vscode-button-background);
+  --command-btn-executing-hover-color: var(
+    --vscode-inputValidation-errorBackground
+  );
+  --modal-overlay-background-color: rgba(0, 0, 0, 0.25);
+  --modal-background-color: var(--vscode-editor-background);
+  --modal-inside-border-color: var(--vscode-textSeparator-foreground);
+  --modal-close-hover-color: var(--vscode-panel-background);
+  --modal-btn-negative-background-color: var(--vscode-panel-background);
+  --modal-btn-negative-border-color: var(--vscode-button-background);
+  --modal-btn-negative-color: var(--vscode-panelTitle-activeForeground);
+  --modal-btn-negative-hover-background-color: var(
+    --vscode-panelStickyScroll-shadow
+  );
+  --modal-btn-negative-hover-color: var(--vscode-panelTitle-activeForeground);
+  --modal-btn-positive-background-color: var(--vscode-button-background);
+  --modal-btn-positive-border-color: var(--vscode-button-background);
+  --modal-btn-positive-color: var(--vscode-button-foreground);
+  --modal-btn-positive-hover-background-color: var(
+    --vscode-button-hoverBackground
+  );
+  --modal-btn-positive-hover-color: var(--vscode-button-foreground);
+}
+
+.category {
+  width: 100%;
+  height: fit-content;
+
+  /* Category Button */
+  .category__button {
+    width: 100%;
+    height: 58px;
+    background-color: var(--category-btn-background-color);
+    display: grid;
+    grid-template-columns: 58px 1fr 64px;
+    user-select: none;
+    border-radius: 8px;
+    cursor: pointer;
+    border-bottom: 4px solid var(--category-btn-border-bottom-color);
+    position: relative;
+    overflow: hidden;
+
+    .category__button_icon,
+    .category__button_chevron {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.2s ease-in-out;
+    }
+
+    .category__button_label {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 15px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+
+  .category__button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--category-btn-gradient-color);
+    background: -moz-linear-gradient(
+      90deg,
+      var(--category-btn-gradient-color),
+      transparent
+    );
+    background: -webkit-linear-gradient(
+      90deg,
+      var(--category-btn-gradient-color),
+      transparent
+    );
+    background: linear-gradient(
+      90deg,
+      var(--category-btn-gradient-color),
+      transparent
+    );
+
+    opacity: 0.3;
+    filter: saturate(0);
+
+    transition: 0.2s ease-in-out;
+  }
+
+  .category__button:hover::before {
+    opacity: 0.4;
+    filter: saturate(1);
+  }
+
+  /* Commands */
+  .commands {
+    height: calc(var(--commands) * 50px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+
+    .command__button {
+      width: 100%;
+      min-height: 50px;
+      height: 50px;
+      background-color: var(--command-btn-background-color);
+      display: grid;
+      grid-template-columns: 58px 1fr 64px;
+      box-sizing: border-box;
+      transition: background-color 0.2s ease-in-out;
+      user-select: none;
+      cursor: pointer;
+      border-radius: 8px;
+
+      .command__button_icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          font-size: 20px;
+        }
+      }
+
+      .command__button_label {
+        margin: auto 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .command__button_state_icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          opacity: 0;
+        }
+      }
+    }
+
+    .command__button.sub {
+      grid-template-columns: 40px 58px 1fr 64px;
+
+      .command__button_tree_tail {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        opacity: 0.5;
+
+        .icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .command__button:hover {
+      background-color: var(--command-btn-hover-color);
+    }
+
+    .command__button.sub:hover {
+      background-color: var(--command-btn-sub-hover-color);
+    }
+
+    .command__button[state="executing"] {
+      .command__button_state_icon {
+        .icon {
+          opacity: 1;
+          animation: rotate 1s linear infinite;
+        }
+      }
+    }
+
+    .command__button[state="executing"]:hover {
+      background-color: var(--command-btn-executing-hover-color);
+    }
+  }
+}
+
+.category[closed="false"] {
+  .category__button_chevron {
+    transform: rotate(90deg);
+  }
+}
+
+.category[closed="true"] {
+  .commands {
+    height: 0;
+    margin-bottom: 0;
+
+    .command__button {
+      opacity: 0;
+    }
+  }
+}
+
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--modal-overlay-background-color);
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 400px;
+  height: fit-content;
+  max-height: 85%;
+  background: var(--modal-background-color);
+  border-radius: 8px;
+  user-select: none;
+  transition: 0.2s ease-in-out;
+
+  .modal__header {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    height: 54px;
+    border-bottom: 2px solid var(--modal-inside-border-color);
+    box-sizing: border-box;
+    padding: 0 6px;
+
+    .modal__header_icon,
+    .modal__header_close {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal__header_close {
+      cursor: pointer;
+      border-radius: 50%;
+      transition: 0.2s ease-in-out;
+      aspect-ratio: 1/1;
+      margin: auto;
+      width: 90%;
+    }
+
+    .modal__header_close:hover {
+      background: var(--modal-close-hover-color);
+    }
+
+    .modal__header_label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  }
+
+  .modal__content {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: calc(100% - 54px - 54px - 16px);
+    font-size: 14px;
+    user-select: text;
+  }
+
+  .modal__footer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 44px;
+    border-top: 2px solid var(--modal-inside-border-color);
+    padding: 4px;
+    grid-column-gap: 4px;
+    box-sizing: border-box;
+
+    .modal__footer_button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 4px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .modal__footer_button.negative {
+      background: var(--modal-btn-negative-background-color);
+      border: 1px solid var(--modal-btn-negative-border-color);
+      color: var(--modal-btn-negative-color);
+    }
+
+    .modal__footer_button.negative:hover {
+      background: var(--modal-btn-negative-hover-background-color);
+      color: var(--modal-btn-negative-hover-color);
+    }
+
+    .modal__footer_button.positive {
+      background: var(--modal-btn-positive-background-color);
+      border: 1px solid var(--modal-btn-positive-border-color);
+      color: var(--modal-btn-positive-color);
+    }
+
+    .modal__footer_button.positive:hover {
+      background: var(--modal-btn-positive-hover-background-color);
+      color: var(--modal-btn-positive-hover-color);
+    }
+  }
+}
+
+.modal__overlay[show="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Animations */
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

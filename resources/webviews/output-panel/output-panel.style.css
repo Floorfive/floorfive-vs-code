@@ -1,0 +1,43 @@
+body {
+  padding: 10px 25px 15px 25px;
+}
+
+div {
+  white-space: wrap;
+  word-break: keep-all;
+  font-family: var(--vscode-editor-font-family);
+  font-size: var(--vscode-editor-font-size);
+  line-height: var(--vscode-editor-line-height);
+  margin-bottom: 4px;
+}
+
+/* Styles */
+
+/* Error */
+.error {
+  color: var(--vscode-editorError-foreground);
+}
+
+/* Warning */
+.warning {
+  color: var(--vscode-editorWarning-foreground);
+}
+
+/* Info */
+.info {
+  color: var(--vscode-editorInfo-foreground);
+}
+
+/* Success */
+.success {
+  color: var(--vscode-terminal-ansiGreen);
+}
+
+/* Step */
+.step {
+  color: var(--vscode-editorInfo-foreground);
+
+  .number {
+    font-weight: bold;
+  }
+}

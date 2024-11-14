@@ -1,63 +1,71 @@
-# FloorFive - VS Code Extension Boilerplate
+# floorfive-vs-code README
 
-<div style="display: flex; gap: 10px; margin-bottom: 20px;">
-<img src="https://img.shields.io/badge/vscode-1.81.0-blue" />
-<img src="https://img.shields.io/badge/node-18.18.0-green" />
-<img src="https://img.shields.io/badge/npm-9.8.1-red" />
-</div>
-
-This boilerplate was created with the aim of providing a simple foundation for a fully customizable extension, allowing for the quick setup and functionality of a tool to launch commands and automate the lengthy and/or repetitive parts of development that can be scripted in some way.
-
-With the FloorFive - VS Code base, it's possible to set up a new command in just a few minutes, with easy definition of both functional and aesthetic attributes such as icon, provision for a loader in case of long-running commands, label, pre-execution confirmation prompt, and the execution itself.
-
-## Usage
-
-For usage instructions, check the [USAGE.md](USAGE.md) file.
+This is the README for your extension "floorfive-vs-code". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
-### Commands
+Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-The main feature of this boilerplate is the ability to create commands that can be easily executed with a single click, without having to remember the command itself or its parameters. The commands can be grouped into categories, which are displayed in the extension's sidebar, and can be executed from there or from the command palette if configured to do so.
+For example if there is an image subfolder under your extension project workspace:
 
-<div style="text-align: center">
-<img src="https://i.ibb.co/vqppXKR/commands-example-screen.png"/>
-</div>
+\!\[feature X\]\(images/feature-x.png\)
 
-It is also possible to instantiate commands dynamically if you need to create a single command class that needs to be executed with different parameters.
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
-<div style="text-align: center">
-<img src="https://i.ibb.co/M9MBHqD/dynamic-commands-example-screen.png" />
-</div>
+## Requirements
 
-### Output panel
+If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-The extension also provides a custom output panel that can be used to display information to the user, such as the progress of a command or the result of its execution.
+## Extension Settings
 
-The panel is fully customizable.
+Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-<div style="text-align: center">
-<img src="https://i.ibb.co/NxZ9FrF/output-panel-example-screen.png" />
-</div>
+For example:
 
-### Icons
+This extension contributes the following settings:
 
-The extension implements an icons injection system that allows you to easily add icons to it.
-It is only necessary to add the `svg` icon to the `assets/icons` folder and add the icon name to the `icons.ts` file, and the icon will be available for use in the extension.
-
-### Themes
-
-The extension is fully built on top of the VS Code theme system, so it automatically adapts to the theme in use.
+* `myExtension.enable`: Enable/disable this extension.
+* `myExtension.thing`: Set to `blah` to do something.
 
 ## Known Issues
 
-There are no known issues at this time.
+Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
-Check the [CHANGELOG.md](CHANGELOG.md) file for more information.
+Users appreciate release notes as you update your extension.
 
-### 1.0.0 - Coming soon
+### 1.0.0
 
-Initial release of **FloorFive - VS Code Extension Boilerplate**.
-Contains the basic structure for creating commands and the output panel.
+Initial release of ...
+
+### 1.0.1
+
+Fixed issue #.
+
+### 1.1.0
+
+Added features X, Y, and Z.
+
+---
+
+## Following extension guidelines
+
+Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+
+* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+
+## Working with Markdown
+
+You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+
+* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
+* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
+* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+
+## For more information
+
+* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy!**
