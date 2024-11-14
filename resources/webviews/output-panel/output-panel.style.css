@@ -13,6 +13,11 @@ div {
 
 /* Styles */
 
+/* Log */
+.log {
+  color: var(--vscode-editor-foreground);
+}
+
 /* Error */
 .error {
   color: var(--vscode-editorError-foreground);

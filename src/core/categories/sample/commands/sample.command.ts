@@ -8,6 +8,7 @@ export default class SampleCommand extends BaseCommand {
       id: "sample",
       label: "Sample",
       icon: "settings",
+      isUnstoppable: true,
     });
   }
 
@@ -15,8 +16,23 @@ export default class SampleCommand extends BaseCommand {
 
   // #region Public Methods
 
-  execute(): void {
-    console.log("Sample Command Executed");
+  public async execute(): Promise<void> {
+    this.start();
+
+    this.logger.log("Sample Command Executed");
+    this.logger.info("Sample Command Executed");
+    this.logger.success("Sample Command Executed");
+    this.logger.warn("Sample Command Executed");
+    this.logger.error("Sample Command Executed");
+    this.logger.step("1", "Sample Command Executed");
+
+    setTimeout(() => {
+      this.stop();
+    }, 5000);
+  }
+
+  public async stopExecution(): Promise<void> {
+    this.stop();
   }
 
   // #endregion Public Methods

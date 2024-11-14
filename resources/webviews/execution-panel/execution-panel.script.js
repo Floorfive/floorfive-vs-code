@@ -22,9 +22,25 @@ window.onload = () => {
     commandBtns.item(i).addEventListener("click", (e) => {
       const command = e.currentTarget.id;
 
-      vscode.postMessage({
-        command: `execute::${command}`,
-      });
+      // Command State
+      const commandState = e.currentTarget.getAttribute("state");
+      const commandUnstoppable = e.currentTarget.getAttribute("unstoppable");
+
+      if (commandState === "executing" && commandUnstoppable === null) {
+        vscode.postMessage({
+          command: `stop`,
+        });
+      } else if (commandState === "idle") {
+        const needsConfirmation =
+          e.currentTarget.getAttribute("needs-confirmation") !== null;
+        if (needsConfirmation) {
+          showModal();
+        } else {
+          vscode.postMessage({
+            command: `execute::${command}`,
+          });
+        }
+      }
     });
   }
 
@@ -33,17 +49,39 @@ window.onload = () => {
     const message = event.data;
     const { command, data } = message;
 
-    console.log(command, data);
+    switch (command) {
+      case "command::start":
+        startExecution(data);
+        break;
+      case "command::stop":
+        stopExecution(data);
+        break;
+    }
   });
+
+  // Add event listener to modal close buttons
+  const modalCloseButtons = document.getElementsByClassName("modal_close");
+  for (let i = 0; i < modalCloseButtons.length; i++) {
+    modalCloseButtons.item(i).addEventListener("click", () => {
+      hideModal();
+    });
+  }
 };
+
+function startExecution(commandButtonId) {
+  document.getElementById(commandButtonId).setAttribute("state", "executing");
+}
+
+function stopExecution(commandButtonId) {
+  document.getElementById(commandButtonId).setAttribute("state", "idle");
+}
 
 function showModal() {
   const modal = document.getElementById("modal");
-  const modalShow = modal.getAttribute("show");
+  modal.setAttribute("show", "true");
+}
 
-  if (modalShow === "false") {
-    modal.setAttribute("show", "true");
-  } else {
-    modal.setAttribute("show", "false");
-  }
+function hideModal() {
+  const modal = document.getElementById("modal");
+  modal.setAttribute("show", "false");
 }

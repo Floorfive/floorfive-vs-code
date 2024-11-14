@@ -54,12 +54,8 @@ export default class BaseCategory implements Category {
 </div>`;
   }
 
-  public getId(): string {
-    return this._id;
-  }
-
   public getCommandById(id: string): BaseCommand | null {
-    return this._commands.find((command) => command.getId() === id) || null;
+    return this._commands.find((command) => command.id === id) || null;
   }
 
   public async isVisible(): Promise<boolean> {
@@ -68,6 +64,10 @@ export default class BaseCategory implements Category {
 
   public executeCommand(commandId: string): void {
     this.getCommandById(commandId)?.execute();
+  }
+
+  public stopCommand(commandId: string): void {
+    this.getCommandById(commandId)?.stopExecution();
   }
 
   // #endregion Public Methods
@@ -93,4 +93,12 @@ export default class BaseCategory implements Category {
   }
 
   // #endregion Private Methods
+
+  // #region Getters
+
+  get id(): string {
+    return this._id;
+  }
+
+  // #endregion Getters
 }

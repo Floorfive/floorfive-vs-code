@@ -12,10 +12,10 @@ export default class BaseWebViewViewProvider implements WebviewViewProvider {
   //#region Constructor
 
   constructor(
-    private readonly _extensionUri: vscode.Uri,
+    protected readonly _extensionUri: vscode.Uri,
     protected readonly _coreController: CoreController,
     public readonly viewType: string,
-    private readonly _viewCode: string
+    protected readonly _viewCode: string
   ) {}
 
   //#endregion Constructor
@@ -37,6 +37,17 @@ export default class BaseWebViewViewProvider implements WebviewViewProvider {
     this._view.webview.html = await this._getHtmlForWebview(this._view.webview);
 
     this._view.webview.onDidReceiveMessage(this.onDidReceiveMessageFn());
+
+    await this.postResolveWebviewView();
+  }
+
+  protected async postResolveWebviewView(): Promise<void> {}
+
+  protected postMessage<T>(command: string, data: T): void {
+    this._view?.webview.postMessage({
+      command,
+      data,
+    });
   }
 
   //#endregion Public Methods

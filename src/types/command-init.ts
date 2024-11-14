@@ -3,4 +3,6 @@ export interface CommandInit {
   label: string;
   icon: string;
   isSubCommand?: boolean;
+  isUnstoppable?: boolean;
+  needsConfirmation?: boolean;
 }

@@ -1,4 +1,6 @@
 import { CommandInit } from "../../types/command-init";
+import Commander from "../services/commander";
+import Logger from "../services/logger";
 
 export default class BaseCommand {
   // #region Properties
@@ -8,8 +10,20 @@ export default class BaseCommand {
   private readonly _label: string;
   private readonly _icon: string;
   private readonly _isSubCommand: boolean = false;
+  private readonly _stoppableAttribute: string = ``;
+  private readonly _needsConfirmationAttribute: string = ``;
+
+  // Command State
+  private _isRunning: boolean = false;
 
   // #endregion Properties
+
+  // #region Services
+
+  protected logger: Logger;
+  protected commander: Commander;
+
+  // #endregion Services
 
   // #region Constructor
 
@@ -18,6 +32,14 @@ export default class BaseCommand {
     this._label = props.label;
     this._icon = props.icon;
     this._isSubCommand = props.isSubCommand || false;
+    this._stoppableAttribute = props.isUnstoppable ? "unstoppable" : "";
+    this._needsConfirmationAttribute = props.needsConfirmation
+      ? "needs-confirmation"
+      : "";
+
+    // Services
+    this.logger = Logger.getInstance();
+    this.commander = Commander.getInstance();
   }
 
   // #endregion Constructor
@@ -27,7 +49,7 @@ export default class BaseCommand {
   getTemplate(categoryId: string): string {
     if (this._isSubCommand) {
       return `<!-- Sub Command: ${categoryId}__${this._id} -->
-<div class="command__button sub" id="${categoryId}__${this._id}" state="idle">
+<div class="command__button sub" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}>
   <div class="command__button_tree_tail">
     <i class="icon">subdirectory_arrow_right</i>
   </div>
@@ -44,7 +66,7 @@ export default class BaseCommand {
     }
 
     return `<!-- Command: ${categoryId}__${this._id} -->
-<div class="command__button" id="${categoryId}__${this._id}" state="idle">
+<div class="command__button" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}>
   <div class="command__button_icon">
     <i class="icon">${this._icon}</i>
   </div>
@@ -57,17 +79,43 @@ export default class BaseCommand {
 </div>`;
   }
 
-  public getId(): string {
-    return this._id;
-  }
-
   public async isVisible(): Promise<boolean> {
     return true;
   }
 
-  public execute(): void {
+  public async execute(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  public async stopExecution(): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
   // #endregion Public Methods
+
+  // #region Protected Methods
+
+  protected start(): void {
+    this._isRunning = true;
+    this.commander.sendCommand("start", null);
+  }
+
+  protected stop(): void {
+    this._isRunning = false;
+    this.commander.sendCommand("stop", null);
+  }
+
+  // #endregion Protected Methods
+
+  // #region Getters
+
+  get id(): string {
+    return this._id;
+  }
+
+  get isRunning(): boolean {
+    return this._isRunning;
+  }
+
+  // #endregion Getters
 }

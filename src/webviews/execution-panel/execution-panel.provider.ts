@@ -1,8 +1,11 @@
 import * as vscode from "vscode";
 import BaseWebViewViewProvider from "../webview.base.provider";
 import CoreController from "../../core/core.controller";
+import Commander from "../../core/services/commander";
 
 export default class ExecutionPanelViewProvider extends BaseWebViewViewProvider {
+  private _commander: Commander = Commander.getInstance();
+
   constructor(_extensionUri: vscode.Uri, _coreController: CoreController) {
     super(
       _extensionUri,
@@ -36,7 +39,18 @@ export default class ExecutionPanelViewProvider extends BaseWebViewViewProvider 
       return "No commands available";
     }
 
-    return categoriesTemplates.join("\n");
+    const templateUri = vscode.Uri.joinPath(
+      this._extensionUri,
+      "resources",
+      "webviews",
+      this._viewCode,
+      `${this._viewCode}.template.html`
+    );
+    const extendedTemplate = (
+      await vscode.workspace.fs.readFile(templateUri)
+    ).toString();
+
+    return categoriesTemplates.join("\n") + "\n\n" + extendedTemplate;
   }
 
   protected override onDidReceiveMessageFn(): (message: any) => void {
@@ -46,7 +60,16 @@ export default class ExecutionPanelViewProvider extends BaseWebViewViewProvider 
           const commandInfo = message.command.split("::")[1];
           this._coreController.executeCommand(commandInfo);
           break;
+        case "stop":
+          this._coreController.stopCommand();
+          break;
       }
     };
+  }
+
+  protected override async postResolveWebviewView(): Promise<void> {
+    this._commander.on("webview", (data: { command: string; data: any }) => {
+      this.postMessage(data.command, data.data);
+    });
   }
 }
