@@ -5,7 +5,7 @@ import CoreController from "../core/core.controller";
 export default class BaseWebViewViewProvider implements WebviewViewProvider {
   //#region Properties
 
-  private _view?: vscode.WebviewView;
+  protected _view?: vscode.WebviewView;
 
   //#endregion Properties
 
@@ -83,7 +83,9 @@ export default class BaseWebViewViewProvider implements WebviewViewProvider {
       webview.cspSource
     }; style-src ${
       webview.cspSource
-    } 'nonce-${nonce}'; script-src 'nonce-${nonce}';"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="${styleUri}" rel="stylesheet"><style nonce="${nonce}">${this._getIconsStyle(
+    } 'nonce-${nonce}'; script-src 'nonce-${nonce}'; img-src ${
+      webview.cspSource
+    }"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="${styleUri}" rel="stylesheet"><style nonce="${nonce}">${this._getIconsStyle(
       webview
     )}</style></head><body>${this._minimizeTemplate(
       template

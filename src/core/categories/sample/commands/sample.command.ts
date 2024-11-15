@@ -28,7 +28,7 @@ export default class SampleCommand extends BaseCommand {
 
     setTimeout(() => {
       this.stop();
-    }, 5000);
+    }, 20000);
   }
 
   public async stopExecution(): Promise<void> {

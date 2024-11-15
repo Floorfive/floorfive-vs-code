@@ -15,7 +15,14 @@
   "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [],
+    "commands": [
+      {
+        "command": "floorfive-vs-code.consoleClear",
+        "title": "Clear All",
+        "icon": "$(clear-all)",
+        "category": "FloorFive"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -45,6 +52,15 @@
           "id": "floorfive-vs-code-output.outputPanel",
           "name": "Output Panel",
           "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "floorfive-vs-code.consoleClear",
+          "when": "view == floorfive-vs-code-output.outputPanel",
+          "group": "navigation"
         }
       ]
     }

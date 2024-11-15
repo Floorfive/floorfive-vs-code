@@ -34,7 +34,11 @@ window.onload = () => {
         const needsConfirmation =
           e.currentTarget.getAttribute("needs-confirmation") !== null;
         if (needsConfirmation) {
-          showModal();
+          const confirmationMessage = e.currentTarget.getAttribute(
+            "confirmation-message"
+          );
+
+          showModal(confirmationMessage, command);
         } else {
           vscode.postMessage({
             command: `execute::${command}`,
@@ -56,6 +60,11 @@ window.onload = () => {
       case "command::stop":
         stopExecution(data);
         break;
+      case "command::init":
+        startExecution(data);
+        const category = data.split("__")[0];
+        categoryBtns.namedItem(category).click();
+        break;
     }
   });
 
@@ -66,6 +75,22 @@ window.onload = () => {
       hideModal();
     });
   }
+
+  // Add event listener to modal confirm button
+  const modalConfirmButton = document.getElementById("modal-confirm");
+  modalConfirmButton.addEventListener("click", () => {
+    const command = modalConfirmButton.getAttribute("command");
+    vscode.postMessage({
+      command: `execute::${command}`,
+    });
+
+    hideModal();
+  });
+
+  // Init event
+  vscode.postMessage({
+    command: "init",
+  });
 };
 
 function startExecution(commandButtonId) {
@@ -76,7 +101,10 @@ function stopExecution(commandButtonId) {
   document.getElementById(commandButtonId).setAttribute("state", "idle");
 }
 
-function showModal() {
+function showModal(message, command) {
+  document.getElementById("modal-content").innerHTML = message;
+  document.getElementById("modal-confirm").setAttribute("command", command);
+
   const modal = document.getElementById("modal");
   modal.setAttribute("show", "true");
 }

@@ -14,5 +14,6 @@ export const LogTypes = {
 
 export const LogEvents = {
   Log: "log",
+  LogsList: "logsList",
   Clear: "clear",
 };

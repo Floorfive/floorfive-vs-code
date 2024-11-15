@@ -4,6 +4,7 @@ import * as vscode from "vscode";
 import WebviewsController from "./webviews/webviews.controller";
 import ExecutionPanelViewProvider from "./webviews/execution-panel/execution-panel.provider";
 import CoreController from "./core/core.controller";
+import Logger from "./core/services/logger";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -20,6 +21,12 @@ export function activate(context: vscode.ExtensionContext) {
     coreController
   );
   webviewsController.registerWebviews(context);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("floorfive-vs-code.consoleClear", () => {
+      Logger.getInstance().clear();
+    })
+  );
 
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand

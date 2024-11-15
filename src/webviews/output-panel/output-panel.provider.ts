@@ -26,4 +26,41 @@ export default class OutputPanelViewProvider extends BaseWebViewViewProvider {
       this.postMessage(LogEvents.Clear, null);
     });
   }
+
+  protected override async getTemplate(): Promise<string> {
+    // Load Base Template
+    const templateUri = vscode.Uri.joinPath(
+      this._extensionUri,
+      "resources",
+      "webviews",
+      this._viewCode,
+      `${this._viewCode}.template.html`
+    );
+    const template = (
+      await vscode.workspace.fs.readFile(templateUri)
+    ).toString();
+
+    // Load Logo
+    const logoUri = vscode.Uri.joinPath(
+      this._extensionUri,
+      "resources",
+      "logo",
+      "FloorFive_activitybar.svg"
+    );
+    const logoTemplate = (
+      await vscode.workspace.fs.readFile(logoUri)
+    ).toString();
+
+    return [template, logoTemplate].join("\n\n");
+  }
+
+  protected override onDidReceiveMessageFn(): (message: any) => void {
+    return (message) => {
+      switch (message.command) {
+        case "init":
+          this.postMessage<Log[]>(LogEvents.LogsList, this._logger.getLogs());
+          break;
+      }
+    };
+  }
 }

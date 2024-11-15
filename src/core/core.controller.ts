@@ -83,6 +83,13 @@ export default class CoreController {
     }
   }
 
+  public getExecutingCommandButtonId(): string | null {
+    if (this._currentCommandId === null || this._currentCategoryId === null) {
+      return null;
+    }
+    return `${this._currentCategoryId}__${this._currentCommandId}`;
+  }
+
   // #endregion Public Methods
 
   // #region Private Methods

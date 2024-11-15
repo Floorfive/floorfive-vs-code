@@ -1,8 +1,12 @@
 let body;
+let logo;
 
 window.onload = function () {
+  const vscode = acquireVsCodeApi();
+
   // Get the body element
   body = document.querySelector("body");
+  logo = document.getElementById("logo");
 
   // Message listener
   window.addEventListener("message", (event) => {
@@ -15,8 +19,19 @@ window.onload = function () {
         break;
       case "clear":
         body.innerHTML = "";
+        body.appendChild(logo);
+        break;
+      case "logsList":
+        for (const message of data) {
+          log(message);
+        }
         break;
     }
+  });
+
+  // Init event
+  vscode.postMessage({
+    command: "init",
   });
 };
 

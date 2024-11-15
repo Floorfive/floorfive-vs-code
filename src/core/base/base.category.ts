@@ -33,7 +33,7 @@ export default class BaseCategory implements Category {
       (await this.visibleCommands()).length
     }">
   <!-- Category Button -->
-  <div class="category__button" category="${this._id}">
+  <div class="category__button" category="${this._id}" name="${this._id}">
     <div class="category__button_icon">
       <i class="icon">${this._icon}</i>
     </div>

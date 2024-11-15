@@ -5,4 +5,5 @@ export interface CommandInit {
   isSubCommand?: boolean;
   isUnstoppable?: boolean;
   needsConfirmation?: boolean;
+  confirmationMessage?: string;
 }

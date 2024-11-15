@@ -12,6 +12,8 @@ export default class BaseCommand {
   private readonly _isSubCommand: boolean = false;
   private readonly _stoppableAttribute: string = ``;
   private readonly _needsConfirmationAttribute: string = ``;
+  private readonly _confirmationMessageAttribute: string = ``;
+  private readonly _confirmationMessage: string = ``;
 
   // Command State
   private _isRunning: boolean = false;
@@ -37,6 +39,21 @@ export default class BaseCommand {
       ? "needs-confirmation"
       : "";
 
+    if (props.needsConfirmation) {
+      if (!props.confirmationMessage) {
+        this._confirmationMessage = `Are you sure you want to proceed?<br/>Command: <b>${this._label}</b>`;
+
+        if (props.isUnstoppable) {
+          this._confirmationMessage +=
+            "<br/><br/>This command cannot be undone.";
+        }
+      } else {
+        this._confirmationMessage = props.confirmationMessage;
+      }
+
+      this._confirmationMessageAttribute = `confirmation-message="${this._confirmationMessage}"`;
+    }
+
     // Services
     this.logger = Logger.getInstance();
     this.commander = Commander.getInstance();
@@ -49,7 +66,8 @@ export default class BaseCommand {
   getTemplate(categoryId: string): string {
     if (this._isSubCommand) {
       return `<!-- Sub Command: ${categoryId}__${this._id} -->
-<div class="command__button sub" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}>
+<div class="command__button sub" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}
+  ${this._confirmationMessageAttribute}>
   <div class="command__button_tree_tail">
     <i class="icon">subdirectory_arrow_right</i>
   </div>
@@ -66,7 +84,8 @@ export default class BaseCommand {
     }
 
     return `<!-- Command: ${categoryId}__${this._id} -->
-<div class="command__button" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}>
+<div class="command__button" id="${categoryId}__${this._id}" state="idle" ${this._stoppableAttribute} ${this._needsConfirmationAttribute}
+  ${this._confirmationMessageAttribute}>
   <div class="command__button_icon">
     <i class="icon">${this._icon}</i>
   </div>

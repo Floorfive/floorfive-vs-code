@@ -1,6 +1,5 @@
 :root {
   --category-btn-background-color: var(--vscode-editor-background);
-  --category-btn-border-bottom-color: var(--vscode-textBlockQuote-background);
   --category-btn-gradient-color: var(--vscode-button-background);
   --command-btn-background-color: var(--vscode-editor-background);
   --command-btn-hover-color: var(--vscode-button-background);
@@ -42,7 +41,7 @@
     user-select: none;
     border-radius: 8px;
     cursor: pointer;
-    border-bottom: 4px solid var(--category-btn-border-bottom-color);
+    margin-bottom: 4px;
     position: relative;
     overflow: hidden;
 
@@ -221,7 +220,6 @@
   background: var(--modal-overlay-background-color);
   justify-content: center;
   align-items: center;
-  transition: 0.2s ease-in-out;
 }
 
 .modal {
@@ -236,7 +234,6 @@
   background: var(--modal-background-color);
   border-radius: 8px;
   user-select: none;
-  transition: 0.2s ease-in-out;
 
   .modal__header {
     display: grid;

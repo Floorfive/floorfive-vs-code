@@ -63,6 +63,13 @@ export default class ExecutionPanelViewProvider extends BaseWebViewViewProvider 
         case "stop":
           this._coreController.stopCommand();
           break;
+        case "init":
+          const executingCommandButtonId =
+            this._coreController.getExecutingCommandButtonId();
+          if (executingCommandButtonId) {
+            this.postMessage("command::init", executingCommandButtonId);
+          }
+          break;
       }
     };
   }

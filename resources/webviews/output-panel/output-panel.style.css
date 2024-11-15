@@ -1,5 +1,36 @@
+html {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
 body {
+  width: 100vw;
+  height: 100vh;
   padding: 10px 25px 15px 25px;
+  position: relative;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  .logo {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    opacity: 0.1;
+  }
+}
+
+body:not(:has(div)) {
+  .logo {
+    display: block;
+  }
 }
 
 div {

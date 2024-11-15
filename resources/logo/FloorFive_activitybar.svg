@@ -1,12 +1,9 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" id="logo" class="logo"
  width="1000.000000pt" height="1000.000000pt" viewBox="0 0 1000.000000 1000.000000"
  preserveAspectRatio="xMidYMid meet">
 
 <g transform="translate(0.000000,1000.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+fill="currentColor" stroke="none">
 <path d="M2985 9709 c-27 -5 -117 -16 -200 -24 -345 -35 -533 -74 -800 -165
 -133 -46 -370 -160 -485 -235 -382 -247 -656 -580 -855 -1039 -90 -207 -168
 -518 -214 -856 -31 -228 -32 -405 -29 -3550 3 -3045 4 -3167 21 -3220 68 -202
